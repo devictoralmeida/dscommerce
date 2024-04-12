@@ -1,7 +1,5 @@
 package com.devsuperior.dscommerce.dto;
 
-import com.devsuperior.dscommerce.entities.Product;
-
 public class ProductDTO {
   private Long id;
   private String name;
@@ -18,14 +16,6 @@ public class ProductDTO {
     this.description = description;
     this.price = price;
     this.imgUrl = imgUrl;
-  }
-
-  public ProductDTO(Product product) {
-    this.id = product.getId();
-    this.name = product.getName();
-    this.description = product.getDescription();
-    this.price = product.getPrice();
-    this.imgUrl = product.getImgUrl();
   }
 
   public Long getId() {
