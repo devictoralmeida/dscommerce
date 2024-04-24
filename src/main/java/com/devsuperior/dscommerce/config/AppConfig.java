@@ -1,8 +1,10 @@
 package com.devsuperior.dscommerce.config;
 
+import com.devsuperior.dscommerce.dto.CategoryDTO;
 import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.dto.ProductMinDTO;
 import com.devsuperior.dscommerce.dto.UserDTO;
+import com.devsuperior.dscommerce.entities.Category;
 import com.devsuperior.dscommerce.entities.Product;
 import com.devsuperior.dscommerce.entities.User;
 import org.modelmapper.ModelMapper;
@@ -28,7 +30,8 @@ public class AppConfig {
             .addMapping(Product::getName, ProductDTO::setName)
             .addMapping(Product::getDescription, ProductDTO::setDescription)
             .addMapping(Product::getPrice, ProductDTO::setPrice)
-            .addMapping(Product::getImgUrl, ProductDTO::setImgUrl);
+            .addMapping(Product::getImgUrl, ProductDTO::setImgUrl)
+            .addMapping(Product::getCategories, ProductDTO::setCategories);
 
     modelMapper.createTypeMap(Product.class, ProductMinDTO.class)
             .addMapping(Product::getId, ProductMinDTO::setId)
@@ -50,6 +53,14 @@ public class AppConfig {
             .addMapping(User::getPhone, UserDTO::setPhone)
             .addMapping(User::getBirthDate, UserDTO::setBirthDate)
             .addMapping(User::getRoles, UserDTO::setRoles);
+
+    modelMapper.createTypeMap(Category.class, CategoryDTO.class)
+            .addMapping(Category::getId, CategoryDTO::setId)
+            .addMapping(Category::getName, CategoryDTO::setName);
+
+    modelMapper.createTypeMap(CategoryDTO.class, Category.class)
+            .addMapping(CategoryDTO::getId, Category::setId)
+            .addMapping(CategoryDTO::getName, Category::setName);
 
     return modelMapper;
   }

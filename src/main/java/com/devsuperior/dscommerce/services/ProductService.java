@@ -1,7 +1,9 @@
 package com.devsuperior.dscommerce.services;
 
+import com.devsuperior.dscommerce.dto.CategoryDTO;
 import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.dto.ProductMinDTO;
+import com.devsuperior.dscommerce.entities.Category;
 import com.devsuperior.dscommerce.entities.Product;
 import com.devsuperior.dscommerce.repositories.ProductRepository;
 import com.devsuperior.dscommerce.services.exceptions.DatabaseException;
@@ -13,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -40,7 +44,9 @@ public class ProductService {
   @Transactional
   public ProductDTO save(ProductDTO productDTO) {
     Product productEntity = this.modelMapper.map(productDTO, Product.class);
-    productEntity = this.productRepository.save(productEntity);
+    this.createCategoriesEntity(productDTO.getCategories(), productEntity);
+    this.productRepository.save(productEntity);
+
     return this.modelMapper.map(productEntity, ProductDTO.class);
   }
 
@@ -51,6 +57,9 @@ public class ProductService {
       // O getReferenceById não vai no banco de dados, ele prepara o obj monitorado pela JPA
       // Instanciando com a referência
       Product entity = this.productRepository.getReferenceById(id);
+
+      this.createCategoriesEntity(productDTO.getCategories(), entity);
+      
       // Atualizando os dados do obj monitorado
       this.modelMapper.map(productDTO, entity);
       // Salvando no banco de dados
@@ -76,6 +85,16 @@ public class ProductService {
     } catch (DataIntegrityViolationException e) {
       // Vamos lançar essa exceção personalizada.
       throw new DatabaseException("Falha de integridade referencial");
+    }
+  }
+
+  public void createCategoriesEntity(List<CategoryDTO> categoriesDTO, Product product) {
+    // Limpando as categorias do obj monitorado
+    product.getCategories().clear();
+
+    for (CategoryDTO categoryDTO : categoriesDTO) {
+      Category category = this.modelMapper.map(categoryDTO, Category.class);
+      product.getCategories().add(category);
     }
   }
 }
