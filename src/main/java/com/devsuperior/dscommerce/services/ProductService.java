@@ -53,7 +53,7 @@ public class ProductService {
       // Atualizando os dados do obj monitorado
       this.modelMapper.map(productDTO, entity);
       // Salvando no banco de dados
-      entity = this.productRepository.save(entity);
+      this.productRepository.save(entity);
       // Retornando o DTO
       return this.modelMapper.map(entity, ProductDTO.class);
     } catch (Exception e) {

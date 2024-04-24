@@ -148,13 +148,13 @@ public class User implements UserDetails {
   @Override
   public String toString() {
     return "User{" +
-            "id=" + this.id +
-            ", name='" + this.name + '\'' +
-            ", email='" + this.email + '\'' +
-            ", phone='" + this.phone + '\'' +
-            ", birthDate=" + this.birthDate +
-            ", password='" + this.password + '\'' +
-            '}';
+           "id=" + this.id +
+           ", name='" + this.name + '\'' +
+           ", email='" + this.email + '\'' +
+           ", phone='" + this.phone + '\'' +
+           ", birthDate=" + this.birthDate +
+           ", password='" + this.password + '\'' +
+           '}';
   }
 
   @Override

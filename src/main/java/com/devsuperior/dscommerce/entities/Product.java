@@ -116,13 +116,11 @@ public class Product {
   @Override
   public String toString() {
     return "Product{" +
-            "id=" + this.id +
-            ", name='" + this.name + '\'' +
-            ", description='" + this.description + '\'' +
-            ", price=" + this.price +
-            ", imgUrl='" + this.imgUrl + '\'' +
-            ", categories=" + this.categories +
-            ", items=" + this.items +
-            '}';
+           "id=" + this.id +
+           ", name='" + this.name + '\'' +
+           ", description='" + this.description + '\'' +
+           ", price=" + this.price +
+           ", imgUrl='" + this.imgUrl + '\'' +
+           '}';
   }
 }
