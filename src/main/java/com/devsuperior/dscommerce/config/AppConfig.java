@@ -1,6 +1,7 @@
 package com.devsuperior.dscommerce.config;
 
 import com.devsuperior.dscommerce.dto.ProductDTO;
+import com.devsuperior.dscommerce.dto.ProductMinDTO;
 import com.devsuperior.dscommerce.dto.UserDTO;
 import com.devsuperior.dscommerce.entities.Product;
 import com.devsuperior.dscommerce.entities.User;
@@ -28,6 +29,12 @@ public class AppConfig {
             .addMapping(Product::getDescription, ProductDTO::setDescription)
             .addMapping(Product::getPrice, ProductDTO::setPrice)
             .addMapping(Product::getImgUrl, ProductDTO::setImgUrl);
+
+    modelMapper.createTypeMap(Product.class, ProductMinDTO.class)
+            .addMapping(Product::getId, ProductMinDTO::setId)
+            .addMapping(Product::getName, ProductMinDTO::setName)
+            .addMapping(Product::getPrice, ProductMinDTO::setPrice)
+            .addMapping(Product::getImgUrl, ProductMinDTO::setImgUrl);
 
     modelMapper.createTypeMap(UserDTO.class, User.class)
             .addMappings(mapper -> mapper.skip(User::setId))
