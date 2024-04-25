@@ -62,6 +62,20 @@ public class AppConfig {
             .addMapping(CategoryDTO::getId, Category::setId)
             .addMapping(CategoryDTO::getName, Category::setName);
 
+//    modelMapper.createTypeMap(OrderDTO.class, Order.class)
+//            .addMappings(mapper -> mapper.skip(Order::setId))
+//            .addMapping(OrderDTO::getMoment, Order::setMoment)
+//            .addMapping(OrderDTO::getStatus, Order::setStatus)
+//            .addMapping(OrderDTO::getClient, Order::setClient)
+//            .addMapping(OrderDTO::getPayment, Order::setPayment);
+
+//    modelMapper.createTypeMap(OrderItemDTO.class, OrderItem.class)
+//            .addMappings(mapper -> mapper.skip(OrderItem::setId))
+//            .addMapping(OrderItemDTO::getProductId, Order::setProduct)
+//            .addMapping(OrderItemDTO::getName, Order::setStatus)
+//            .addMapping(OrderItemDTO::getPrice, Order::setClient)
+//            .addMapping(OrderItemDTO::getQuantity, Order::setPayment);
+
     return modelMapper;
   }
 }

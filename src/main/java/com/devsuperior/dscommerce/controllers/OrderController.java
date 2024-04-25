@@ -2,12 +2,13 @@ package com.devsuperior.dscommerce.controllers;
 
 import com.devsuperior.dscommerce.dto.OrderDTO;
 import com.devsuperior.dscommerce.services.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/orders")
@@ -16,6 +17,7 @@ public class OrderController {
 
   public OrderController(OrderService orderService) {
     this.orderService = orderService;
+
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -24,16 +26,13 @@ public class OrderController {
     return ResponseEntity.ok(this.orderService.findById(id));
   }
 
-//  @PreAuthorize("hasRole('ROLE_ADMIN')")
-//  @PostMapping
-//  public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO productDTO) {
-//    // 1º Cria o produto
-//    ProductDTO dto = this.productService.save(productDTO);
-//    // 2º Cria a URI
-//    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-//    // 3º Cria a responseEntity com a URI e o body como o dto retornado pelo service.
-//    return ResponseEntity.created(uri).body(dto);
-//  }
+  @PreAuthorize("hasRole('ROLE_CLIENT')")
+  @PostMapping
+  public ResponseEntity<OrderDTO> save(@Valid @RequestBody OrderDTO orderDTO) {
+    OrderDTO dto = this.orderService.save(orderDTO);
+    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+    return ResponseEntity.created(uri).body(dto);
+  }
 //
 //  @PreAuthorize("hasRole('ROLE_ADMIN')")
 //  @PutMapping(value = "/{id}")
