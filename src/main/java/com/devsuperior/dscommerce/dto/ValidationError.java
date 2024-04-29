@@ -16,6 +16,8 @@ public class ValidationError extends CustomError {
   }
 
   public void addError(String fieldName, String message) {
+    // Evitar mensagens duplicadas
+    this.errors.removeIf(error -> error.getFieldName().equals(fieldName));
     this.errors.add(new FieldMessage(fieldName, message));
   }
 }
