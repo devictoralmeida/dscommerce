@@ -18,18 +18,23 @@ public class OrderService {
   private final ProductRepository productRepository;
   private final OrderItemRepository orderItemRepository;
   private final UserService userService;
+  private final AuthService authService;
 
-  public OrderService(OrderRepository orderRepository, UserService userService, ProductRepository productRepository, OrderItemRepository orderItemRepository) {
-    this.orderRepository = orderRepository;
+  public OrderService(AuthService authService, UserService userService, OrderItemRepository orderItemRepository, ProductRepository productRepository, OrderRepository orderRepository) {
+    this.authService = authService;
     this.userService = userService;
-    this.productRepository = productRepository;
     this.orderItemRepository = orderItemRepository;
+    this.productRepository = productRepository;
+    this.orderRepository = orderRepository;
   }
 
   @Transactional(readOnly = true)
   public OrderDTO findById(Long id) {
     Order order = this.orderRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Pedido não encontrado"));
+
+    // Validando se o usuário logado é admin ou é o dono do pedido
+    this.authService.validateSelfOrAdmin(order.getClient().getId());
     return new OrderDTO(order);
   }
 
